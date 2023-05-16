@@ -9,7 +9,7 @@ def mem_leak():
     total = 0
     array = []
     influx_service = InfluxService()
-    memory_usage_threshold = 70
+    memory_usage_threshold = 75
     stop = False
     while not stop:
         try:
