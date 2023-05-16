@@ -18,7 +18,7 @@ def mem_leak():
             with open('/Users/jayanand/PycharmProjects/canopus-technical-interview/memory_leak/file.txt') as f:
                 lines = f.read()
                 size = sys.getsizeof(lines)
-            # time.sleep(1)
+            time.sleep(1)
             array.append(lines)
             total += size
             result = client.query(f"SELECT mem_used FROM os_poll GROUP BY * ORDER BY DESC LIMIT 1")
