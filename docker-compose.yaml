@@ -12,6 +12,12 @@ services:
       INFLUXDB_ADMIN_PASSWORD: "admin"
     volumes:
       - "influxdb-data:/var/lib/influxdb"
+#  monitor_os:
+#    restart: unless-stopped
+#    container_name: monitor_os
+#    build:
+#      context: ./monitor
+#      dockerfile: Dockerfile
 
 volumes:
   influxdb-data: { }

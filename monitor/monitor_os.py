@@ -1,6 +1,6 @@
 import psutil
 from influxdb import InfluxDBClient
-import sched, time
+import time
 
 client = InfluxDBClient(host='localhost', port=8086, username='user', password='admin')
 client.switch_database('canopus')
@@ -12,6 +12,7 @@ def poll_os():
             time.sleep(1)
             cpu, mem_used = retrieve_os_stats()
             write_to_influx(cpu, mem_used)
+            print(f"Logged: CPU {cpu}%, MEM {mem_used}%")
         except:
             print("An error occured")
 
