@@ -14,21 +14,21 @@ def mem_leak():
     stop = False
     p = Path(__file__).with_name('file.txt')
     while not stop:
-        # try:
-        with p.open('r') as f:
-            lines = f.read()
-            size = sys.getsizeof(lines)
-        time.sleep(1)
-        array.append(lines)
-        total += size
-        points = influx_service.read_os_datapoints()
-        for point in points:
-            print(f"Memory Used: {point['mem_used']}%")
-            if point['mem_used'] >= memory_usage_threshold:
-                stop = True
-                break
-        # except:
-        #     print("An error occured")
+        try:
+            with p.open('r') as f:
+                lines = f.read()
+                size = sys.getsizeof(lines)
+            time.sleep(1)
+            array.append(lines)
+            total += size
+            points = influx_service.read_os_datapoints()
+            for point in points:
+                print(f"Memory Used: {point['mem_used']}%")
+                if point['mem_used'] >= memory_usage_threshold:
+                    stop = True
+                    break
+        except Exception as e:
+            print("An error occured", e)
 
 
 if __name__ == "__main__":
