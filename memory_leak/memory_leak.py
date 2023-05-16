@@ -9,8 +9,9 @@ def mem_leak():
     total = 0
     array = []
     influx_service = InfluxService()
-    memory_usage_threshold = 75
-    while True:
+    memory_usage_threshold = 70
+    stop = False
+    while not stop:
         try:
             with open('/Users/jayanand/PycharmProjects/canopus-technical-interview/memory_leak/file.txt') as f:
                 lines = f.read()
@@ -22,7 +23,8 @@ def mem_leak():
             for point in points:
                 print(f"Memory Used: {point['mem_used']}%")
                 if point['mem_used'] >= memory_usage_threshold:
-                    sys.exit(1)
+                    stop = True
+                    break
         except:
             print("An error occured")
 
