@@ -2,17 +2,14 @@
 # Put this in a while loop
 import sys
 import time
-
-from influxdb import InfluxDBClient
-
-client = InfluxDBClient(host='localhost', port=8086, username='user', password='admin')
-client.switch_database('canopus')
+from influx_service.influx_service import InfluxService
 
 
 def mem_leak():
     total = 0
     array = []
-
+    influx_service = InfluxService()
+    memory_usage_threshold = 75
     while True:
         try:
             with open('/Users/jayanand/PycharmProjects/canopus-technical-interview/memory_leak/file.txt') as f:
@@ -21,16 +18,14 @@ def mem_leak():
             time.sleep(1)
             array.append(lines)
             total += size
-            result = client.query(f"SELECT mem_used FROM os_poll GROUP BY * ORDER BY DESC LIMIT 1")
-            points = result.get_points()
+            points = influx_service.read_os_datapoints()
             for point in points:
-                if point['mem_used'] >= 75:
+                print(f"Memory Used: {point['mem_used']}%")
+                if point['mem_used'] >= memory_usage_threshold:
                     sys.exit(1)
         except:
             print("An error occured")
 
 
-
 if __name__ == "__main__":
     mem_leak()
-
