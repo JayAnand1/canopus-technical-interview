@@ -6,3 +6,12 @@ services:
     image: "influxdb:1.7-alpine"
     ports:
       - "8086:8086"
+    environment:
+      INFLUXDB_DB: "canopus"
+      INFLUXDB_ADMIN_USER: "user"
+      INFLUXDB_ADMIN_PASSWORD: "admin"
+    volumes:
+      - "influxdb-data:/var/lib/influxdb"
+
+volumes:
+  influxdb-data: { }
