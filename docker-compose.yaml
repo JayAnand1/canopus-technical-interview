@@ -1,0 +1,8 @@
+version: "2"
+services:
+  influxdb:
+    restart: unless-stopped
+    container_name: influxdb
+    image: "influxdb:1.7-alpine"
+    ports:
+      - "8086:8086"
