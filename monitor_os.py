@@ -9,9 +9,9 @@ client.switch_database('canopus')
 def poll_os():
     while True:
         try:
+            time.sleep(1)
             cpu, mem_used = retrieve_os_stats()
             write_to_influx(cpu, mem_used)
-            time.sleep(1)
         except:
             print("An error occured")
 
